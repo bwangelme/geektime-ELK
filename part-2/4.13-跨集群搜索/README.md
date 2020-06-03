@@ -16,20 +16,20 @@ PUT _cluster/settings
       "remote": {
         "cluster0": {
           "seeds": [
-            "127.0.0.1:9300"
+            "es7_hot:9300"
           ],
           "transport.ping_schedule": "30s"
         },
         "cluster1": {
           "seeds": [
-            "127.0.0.1:9301"
+            "es7_cold:9300"
           ],
           "transport.compress": true,
           "skip_unavailable": true
         },
         "cluster2": {
           "seeds": [
-            "127.0.0.1:9302"
+            "es7_warm:9300"
           ]
         }
       }
@@ -38,24 +38,24 @@ PUT _cluster/settings
 }
 
 #cURL
-curl -XPUT "http://localhost:9200/_cluster/settings" -H 'Content-Type: application/json' -d'
-{"persistent":{"cluster":{"remote":{"cluster0":{"seeds":["127.0.0.1:9300"],"transport.ping_schedule":"30s"},"cluster1":{"seeds":["127.0.0.1:9301"],"transport.compress":true,"skip_unavailable":true},"cluster2":{"seeds":["127.0.0.1:9302"]}}}}}'
+curl -XPUT "http://es7_hot:9200/_cluster/settings" -H 'Content-Type: application/json' -d'
+{"persistent":{"cluster":{"remote":{"cluster0":{"seeds":["es7_hot:9300"],"transport.ping_schedule":"30s"},"cluster1":{"seeds":["es7_cold:9300"],"transport.compress":true,"skip_unavailable":true},"cluster2":{"seeds":["es7_warm:9300"]}}}}}'
 
-curl -XPUT "http://localhost:9201/_cluster/settings" -H 'Content-Type: application/json' -d'
-{"persistent":{"cluster":{"remote":{"cluster0":{"seeds":["127.0.0.1:9300"],"transport.ping_schedule":"30s"},"cluster1":{"seeds":["127.0.0.1:9301"],"transport.compress":true,"skip_unavailable":true},"cluster2":{"seeds":["127.0.0.1:9302"]}}}}}'
+curl -XPUT "http://es7_warm:9200/_cluster/settings" -H 'Content-Type: application/json' -d'
+{"persistent":{"cluster":{"remote":{"cluster0":{"seeds":["es7_hot:9300"],"transport.ping_schedule":"30s"},"cluster1":{"seeds":["es7_cold:9300"],"transport.compress":true,"skip_unavailable":true},"cluster2":{"seeds":["es7_warm:9300"]}}}}}'
 
-curl -XPUT "http://localhost:9202/_cluster/settings" -H 'Content-Type: application/json' -d'
-{"persistent":{"cluster":{"remote":{"cluster0":{"seeds":["127.0.0.1:9300"],"transport.ping_schedule":"30s"},"cluster1":{"seeds":["127.0.0.1:9301"],"transport.compress":true,"skip_unavailable":true},"cluster2":{"seeds":["127.0.0.1:9302"]}}}}}'
+curl -XPUT "http://es7_cold:9200/_cluster/settings" -H 'Content-Type: application/json' -d'
+{"persistent":{"cluster":{"remote":{"cluster0":{"seeds":["es7_hot:9300"],"transport.ping_schedule":"30s"},"cluster1":{"seeds":["es7_cold:9300"],"transport.compress":true,"skip_unavailable":true},"cluster2":{"seeds":["es7_warm:9300"]}}}}}'
 
 
 #创建测试数据
-curl -XPOST "http://localhost:9200/users/_doc" -H 'Content-Type: application/json' -d'
+curl -XPOST "http://es7_hot:9200/users/_doc" -H 'Content-Type: application/json' -d'
 {"name":"user1","age":10}'
 
-curl -XPOST "http://localhost:9201/users/_doc" -H 'Content-Type: application/json' -d'
+curl -XPOST "http://es7_warm:9200/users/_doc" -H 'Content-Type: application/json' -d'
 {"name":"user2","age":20}'
 
-curl -XPOST "http://localhost:9202/users/_doc" -H 'Content-Type: application/json' -d'
+curl -XPOST "http://es7_cold:9200/users/_doc" -H 'Content-Type: application/json' -d'
 {"name":"user3","age":30}'
 
 

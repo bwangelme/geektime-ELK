@@ -1,6 +1,7 @@
 # 自动补全与基于上下文的提示
 ## 课程demo
-```
+
+```sh
 DELETE articles
 PUT articles
 {
