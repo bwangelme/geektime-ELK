@@ -1,7 +1,14 @@
 # 排序及Doc Values & Fielddata
+
+## 说明
+
+排序是针对字段的原始内容进行的，倒排索引无法发挥作用，需要用到正排索引
+
 ## 课程demo
-```
+
+```sh
 #单字段排序
+# 当我们自己制定 order 字段的时候，score 就变成了 null
 POST /kibana_sample_data_ecommerce/_search
 {
   "size": 5,
