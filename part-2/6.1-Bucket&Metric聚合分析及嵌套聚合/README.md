@@ -1,4 +1,10 @@
 # Bucket & Metric Aggregation
+## 笔记
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gfv0a5p1wwj31hc0u0ar4.jpg)
+
+聚合分两种 Bucket 和 Metric，Bucket 是进行了分组, Metric 是对组内求单个统计值
+
 ## demos
 ```
 DELETE /employees
@@ -256,6 +262,7 @@ POST employees/_search
       "terms": {
         "field":"job.keyword"
       },
+      # 这里表示对分桶后的结果再挨个执行这里面的运算
       "aggs":{
         "old_employee":{
           "top_hits":{
