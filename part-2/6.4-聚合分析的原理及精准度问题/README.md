@@ -1,4 +1,7 @@
 # 聚合分析的原理及精准度问题
+
+![](https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-06-21-081435.png)
+
 ## 课程demo
 ```
 DELETE my_flights

@@ -118,7 +118,7 @@ PUT blogs_fix/
         "keyword" : {
           "type" : "keyword"
         }
-      }    
+      }
   }
 }
 
@@ -204,9 +204,30 @@ POST  _reindex
 }
 
 
+# 设置 reindex 为异步操作
+POST _reindex?wait_for_completion=false
+
+# 查看异步执行的任务，任务执行完成后，就查不到了
 GET _tasks?detailed=true&actions=*reindex
 
+# 迁移一个文档总数为 62W 的索引
+POST _reindex?wait_for_completion=false
+{
+  "source": {
+    "index": "movie"
+  },
+  "dest": {
+    "index": "douban_movie"
+  }
+}
+
+#   "task" : "ajzevAHxRLGM2rhR0ma1ug:18869"
+GET _tasks?detailed=true&actions=*reindex
+
+GET douban_movie/_count
+GET movie/_count
 ```
+
 ## 相关阅读
 - https://www.elastic.co/guide/en/elasticsearch/reference/7.1/docs-reindex.html
 - https://www.elastic.co/guide/en/elasticsearch/reference/7.1/docs-update-by-query.html

@@ -1,4 +1,6 @@
 # 文档的父子关系
+
+
 ## 课程demo
 ```
 DELETE my_blogs
@@ -50,6 +52,7 @@ PUT my_blogs/_doc/blog2
 
 
 #索引子文档
+# routing 参数确保父子文档在同一个分片上
 PUT my_blogs/_doc/comment1?routing=blog1
 {
   "comment":"I am learning ELK",
@@ -136,7 +139,7 @@ POST my_blogs/_search
 
 
 
-#通过ID ，访问子文档
+#通过ID ，访问子文档，不加 routing 参数查不到结果
 GET my_blogs/_doc/comment3
 #通过ID和routing ，访问子文档
 GET my_blogs/_doc/comment3?routing=blog2

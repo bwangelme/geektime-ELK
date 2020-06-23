@@ -1,5 +1,9 @@
 # Pipeline 聚合分析
+
+## 笔记
+
 ## 课程 demo
+
 ```
 DELETE employees
 PUT /employees/_bulk
@@ -64,6 +68,7 @@ POST employees/_search
         }
       }
     },
+    # min_bucket 和 buckets_path 是进行二次聚合分析的关键字
     "min_salary_by_job":{
       "min_bucket": {
         "buckets_path": "jobs>avg_salary"

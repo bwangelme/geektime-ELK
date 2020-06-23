@@ -1,4 +1,12 @@
 # Ingest Pipeline & Painless Script
+
+## Painless 脚本
+
+6.0 开始，ES 只支持 Painless，Groovy, Javascript, Python 都不再支持
+
+![](https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-06-21-095103.png)
+
+
 ## 课程demo
 ```
 #########Demo for Pipeline###############
@@ -165,7 +173,7 @@ POST tech_blogs/_update_by_query?pipeline=blog_pipeline
 {
 }
 
-#增加update_by_query的条件
+#增加update_by_query的条件, views 字段没有的时候才更新
 POST tech_blogs/_update_by_query?pipeline=blog_pipeline
 {
     "query": {
@@ -178,7 +186,6 @@ POST tech_blogs/_update_by_query?pipeline=blog_pipeline
         }
     }
 }
-
 
 #########Demo for Painless###############
 

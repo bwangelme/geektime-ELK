@@ -1,4 +1,9 @@
 # 作用范围与排序
+
+## 笔记
+
+ES 聚合分析的默认作用范围是 query 查询的结果集
+
 ## 课程demo
 ```
 DELETE /employees
@@ -90,7 +95,7 @@ POST employees/_search
     "jobs": {
       "terms": {
         "field":"job.keyword"
-        
+
       }
     }
   }
@@ -120,7 +125,7 @@ POST employees/_search
     "all_jobs": {
       "terms": {
         "field":"job.keyword"
-        
+
       }
     }
   }
@@ -161,10 +166,10 @@ POST employees/_search
     "jobs": {
       "terms": {
         "field":"job.keyword"
-        
+
       }
     },
-    
+
     "all":{
       "global":{},
       "aggs":{
@@ -199,7 +204,7 @@ POST employees/_search
           {"_count":"asc"},
           {"_key":"desc"}
           ]
-        
+
       }
     }
   }
@@ -218,8 +223,8 @@ POST employees/_search
         "order":[  {
             "avg_salary":"desc"
           }]
-        
-        
+
+
       },
     "aggs": {
       "avg_salary": {
@@ -245,8 +250,8 @@ POST employees/_search
         "order":[  {
             "stats_salary.min":"desc"
           }]
-        
-        
+
+
       },
     "aggs": {
       "stats_salary": {
