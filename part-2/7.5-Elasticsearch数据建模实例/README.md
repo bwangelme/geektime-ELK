@@ -1,5 +1,9 @@
 # Elasticsearch 数据建模实例
-##课程demo
+
+## 笔记
+
+## 课程demo
+
 ```
 ###### Data Modeling Example
 
@@ -43,6 +47,7 @@ PUT books
 }
 
 #Cover URL index 设置成false，无法对该字段进行搜索
+# "reason": "Cannot search on field [cover_url] since it is not indexed."
 POST books/_search
 {
   "query": {
@@ -129,4 +134,7 @@ POST books/_search
 }
 
 ```
-##相关阅读
+
+## 相关阅读
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-params.html

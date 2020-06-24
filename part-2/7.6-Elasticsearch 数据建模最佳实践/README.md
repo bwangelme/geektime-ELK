@@ -1,5 +1,13 @@
 # Elasticsearch 数据建模最佳实践
 
+# 笔记
+
+组织字段膨胀的方法:
+
+1. 创建 Nested 字段，将字段都存储到 Nested 字段中
+2. 空值会导致聚合结果不准，求平均值没有将空值记录在内
+3. 将 mapping 文件存储到版本控制系统中，利用 `software_version_mapping` 进行版本管理
+
 # 课程demo
 
 ```
@@ -182,7 +190,7 @@ PUT softwares/_doc/1
   "display_name":"7.1.0",
   "marjor":7,
   "minor":1,
-  "hot_fix":0  
+  "hot_fix":0
   }
 
 }
@@ -193,7 +201,7 @@ PUT softwares/_doc/2
   "display_name":"7.2.0",
   "marjor":7,
   "minor":2,
-  "hot_fix":0  
+  "hot_fix":0
   }
 }
 
@@ -203,7 +211,7 @@ PUT softwares/_doc/3
   "display_name":"7.2.1",
   "marjor":7,
   "minor":2,
-  "hot_fix":1  
+  "hot_fix":1
   }
 }
 
@@ -285,6 +293,7 @@ POST ratings/_search
 ```
 
 ## 相关阅读
+
 - https://www.elastic.co/guide/en/elasticsearch/reference/7.1/general-recommendations.html
 - https://www.elastic.co/guide/en/elasticsearch/reference/7.1/tune-for-disk-usage.html
 - https://www.elastic.co/guide/en/elasticsearch/reference/7.1/tune-for-search-speed.html
