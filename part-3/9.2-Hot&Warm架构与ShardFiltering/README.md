@@ -2,10 +2,10 @@
 ## 课程代码
 ```
 # 标记一个 Hot 节点
-bin/elasticsearch  -E node.name=hotnode -E cluster.name=geektime -E path.data=hot_data -E node.attr.my_node_type=hot
+bin/elasticsearch  -E node.name=hotnode -E cluster.name=geektime -E path.data=hot_data -E node.attr.box_type=hot
 
 # 标记一个 warm 节点
-bin/elasticsearch  -E node.name=warmnode -E cluster.name=geektime -E path.data=warm_data -E node.attr.my_node_type=warm
+bin/elasticsearch  -E node.name=warmnode -E cluster.name=geektime -E path.data=warm_data -E node.attr.box_type=warm
 
 # 查看节点
 GET /_cat/nodeattrs?v
@@ -16,26 +16,23 @@ PUT logs-2019-06-27
   "settings":{
     "number_of_shards":2,
     "number_of_replicas":0,
-    "index.routing.allocation.require.my_node_type":"hot"
+    "index.routing.allocation.require.box_type":"hot"
   }
 }
 
-
-
-PUT my_index1/_doc/1
+PUT logs-2019-06-27/_doc/1
 {
-  "key":"value"
+  "key": "value"
 }
-
 
 
 GET _cat/shards?v
 
 
 # 配置到 warm 节点
-PUT PUT logs-2019-06-27/_settings
-{  
-  "index.routing.allocation.require.my_node_type":"warm"
+PUT logs-2019-06-27/_settings
+{
+  "index.routing.allocation.require.box_type":"warm"
 }
 
 
@@ -45,6 +42,7 @@ bin/elasticsearch  -E node.name=node1 -E cluster.name=geektime -E path.data=node
 # 标记一个 rack 2
 bin/elasticsearch  -E node.name=node2 -E cluster.name=geektime -E path.data=node2_data -E node.attr.my_rack_id=rack2
 
+# 将主分片和副本分片分配到不同的 rack_id 上
 PUT _cluster/settings
 {
   "persistent": {
@@ -70,7 +68,6 @@ GET _cat/shards?v
 DELETE my_index1/_doc/1
 
 
-
 # Fore awareness
 # 标记一个 rack 1
 bin/elasticsearch  -E node.name=node1 -E cluster.name=geektime -E path.data=node1_data -E node.attr.my_rack_id=rack1
@@ -94,9 +91,10 @@ GET _cluster/health
 # 副本无法分配
 GET _cat/shards?v
 
-
+# 查看集群不健康的详细原因
 GET _cluster/allocation/explain?pretty
 ```
+
 ## 相关阅读
 - https://www.elastic.co/cn/blog/sizing-hot-warm-architectures-for-logging-and-metrics-in-the-elasticsearch-service-on-elastic-cloud
 - https://www.elastic.co/cn/blog/deploying-a-hot-warm-logging-cluster-on-the-elasticsearch-service
